@@ -1,4 +1,12 @@
-  let clicked = false;
+let hasClicked = false;
+
+const observer = new MutationObserver((mutationsList, observer) => {
+  if (hasClicked) return;
+
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'childList') {
+      const btn = document.getElementsByTagName('button');
+      let clicked = false;
 
       // Loop through all buttons and click the ones with "CLAIM" in the text
       for (let i = 0; i < btn.length; i++) {
@@ -18,7 +26,7 @@
           hasClicked = false;
           observer.observe(document.body, { childList: true, subtree: true });
           console.log('Resuming observation');
-        }, 15); // 1-second pause after clicking buttons
+        }, 10); // 1-second pause after clicking buttons
       }
     }
   }
